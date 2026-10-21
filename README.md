@@ -26,8 +26,8 @@
 flowchart LR
     A[PubMed<br/>Entrez API] -->|1.1 Download| B[(SQLite<br/>articles)]
     B -->|1.2 Gemini extraction| C[(supplement_trials_processed)]
-    C -->|1.3 Analysis| D[(analysis tables<br/>same database)]
-    C -->|1.4 Plotting| E[PNG charts<br/>charts/]
+    C -->|1.3 Analysis| D[(analysis tables<br/>in database)]
+    D -->|1.4 Plotting| E[PNG charts<br/>charts/]
 ```
 
 | Milestone | Script | What it does | Output |

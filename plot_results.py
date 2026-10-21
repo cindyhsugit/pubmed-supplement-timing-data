@@ -1,6 +1,6 @@
 """
-Plotting Script for Supplement Trial Analysis.
-Generates clean visual charts with question titles at the top.
+Plotting Script for Supplement Trial Analysis (Milestone 1.4).
+Reads exclusively from Milestone 1.3 analysis summary tables in the database.
 """
 
 import os
@@ -14,17 +14,6 @@ DB_PATH = "pubmed_supplements.db"
 OUTPUT_DIR = "charts"
 
 
-def classify_solubility(c_class):
-    if not isinstance(c_class, str):
-        return "Unclassified"
-    c = c_class.lower()
-    if any(term in c for term in ["fat-soluble", "omega-3", "lipid"]):
-        return "Lipophilic (Fat-Soluble)"
-    if any(term in c for term in ["water-soluble", "mineral", "amino acid"]):
-        return "Hydrophilic / Polar"
-    return "Other / Unclassified"
-
-
 def save_chart(filename):
     path = os.path.join(OUTPUT_DIR, filename)
     plt.tight_layout()
@@ -33,23 +22,19 @@ def save_chart(filename):
     print(f"[Saved] -> {path}")
 
 
-def plot_question_1(df):
-    """Q1: When is the best time to take supplements?"""
-    if "timing_window" not in df.columns:
-        return
-    counts = (
-        df[df["timing_window"].isin(["Morning", "Evening"])]["timing_window"]
-        .value_counts()
-        .reindex(["Morning", "Evening"], fill_value=0)
-    )
-    if counts.sum() == 0:
+def plot_question_1(con):
+    """Q1: When is the best time to take supplements? (Reads from analysis table)"""
+    df = pd.read_sql("SELECT * FROM analysis_q1_timing_summary", con)
+    if df.empty:
+        print("No data found in analysis_q1_timing_summary.")
         return
 
     plt.figure(figsize=(7, 6))
     ax = sns.barplot(
-        x=counts.index,
-        y=counts.values,
-        hue=counts.index,
+        data=df,
+        x="timing_window",
+        y="count",
+        hue="timing_window",
         palette=["#F4B942", "#4B6CB7"],
         legend=False,
     )
@@ -67,32 +52,19 @@ def plot_question_1(df):
     save_chart("question_1_morning_vs_evening.png")
 
 
-def plot_question_2(df):
-    """Q2: Is there a cap?"""
-    needed = {"absorption_limit_stated", "interactions_noted"}
-    if not needed.issubset(df.columns):
-        return
-
-    def has_text(s):
-        s = s.fillna("").astype(str).str.strip().str.lower()
-        return ~s.isin(["", "none"])
-
-    mentioned = has_text(df["absorption_limit_stated"]) | has_text(
-        df["interactions_noted"]
-    )
-    counts = (
-        mentioned.map({True: "Yes", False: "No"})
-        .value_counts()
-        .reindex(["Yes", "No"], fill_value=0)
-    )
-    if counts.sum() == 0:
+def plot_question_2(con):
+    """Q2: Is there a cap? (Reads from analysis table)"""
+    df = pd.read_sql("SELECT * FROM analysis_q2_limits_summary", con)
+    if df.empty:
+        print("No data found in analysis_q2_limits_summary.")
         return
 
     plt.figure(figsize=(7, 6))
     ax = sns.barplot(
-        x=counts.index,
-        y=counts.values,
-        hue=counts.index,
+        data=df,
+        x="has_limit_or_interaction",
+        y="count",
+        hue="has_limit_or_interaction",
         palette=["#2E8B57", "#9AA5B1"],
         legend=False,
     )
@@ -112,23 +84,19 @@ def plot_question_2(df):
     save_chart("question_2_absorption_limits.png")
 
 
-def plot_question_3(df):
-    """Q3: Does morning mean before or after a meal for best absorption?"""
-    if "administration_state" not in df.columns:
-        return
-    counts = (
-        df[df["administration_state"].isin(["Fed", "Fasted"])]["administration_state"]
-        .value_counts()
-        .reindex(["Fed", "Fasted"], fill_value=0)
-    )
-    if counts.sum() == 0:
+def plot_question_3(con):
+    """Q3: Does morning mean before or after a meal for best absorption? (Reads from analysis table)"""
+    df = pd.read_sql("SELECT * FROM analysis_q3_fed_fasted_summary", con)
+    if df.empty:
+        print("No data found in analysis_q3_fed_fasted_summary.")
         return
 
     plt.figure(figsize=(7, 6))
     ax = sns.barplot(
-        x=counts.index,
-        y=counts.values,
-        hue=counts.index,
+        data=df,
+        x="administration_state",
+        y="count",
+        hue="administration_state",
         palette=["#E07A5F", "#3D85C6"],
         legend=False,
     )
@@ -152,23 +120,20 @@ def plot_question_3(df):
 
 def milestone1_4():
     if not os.path.exists(DB_PATH):
-        print(f"Error: Database '{DB_PATH}' not found.")
+        print(f"Error: Database '{DB_PATH}' not found. Run Milestone 1.3 first.")
         return
 
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     con = sqlite3.connect(DB_PATH)
-    df = pd.read_sql("SELECT * FROM supplement_trials_processed", con)
-    con.close()
-
-    if df.empty:
-        print("Database table is empty.")
-        return
 
     sns.set_theme(style="whitegrid")
-    plot_question_1(df)
-    plot_question_2(df)
-    plot_question_3(df)
-    print(f"\nCharts successfully generated and saved in the '{OUTPUT_DIR}/' folder!")
+    plot_question_1(con)
+    plot_question_2(con)
+    plot_question_3(con)
+    con.close()
+    print(
+        f"\nCharts successfully generated from analysis tables and saved in '{OUTPUT_DIR}/'!"
+    )
 
 
 if __name__ == "__main__":
