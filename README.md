@@ -26,7 +26,7 @@
 flowchart LR
     A[PubMed<br/>Entrez API] -->|1.1 Download| B[(SQLite<br/>articles)]
     B -->|1.2 Gemini extraction| C[(supplement_trials_processed)]
-    C -->|1.3 Analysis| D[CSV findings<br/>analysis_outputs/]
+    C -->|1.3 Analysis| D[(analysis tables<br/>same database)]
     C -->|1.4 Plotting| E[PNG charts<br/>charts/]
 ```
 
@@ -34,7 +34,7 @@ flowchart LR
 |-----------|--------|--------------|--------|
 | **1.1** Download | `pubmed_supplement_rcts.py` | Fetches double-blind RCTs on vitamins, minerals, omega fatty acids and amino acids (last 20 years) as XML and stores PMID, title, abstract and year | `articles`, `article_categories` tables |
 | **1.2** Extract | `extract_supplements.py` | Sends each abstract to Gemini with a Pydantic schema and stores structured fields, one row per supplement per trial | `supplement_trials_processed` table |
-| **1.3** Analyze | `analyze_supplements.py` | Aggregates the extracted data to address each question | CSV files in `analysis_outputs/` |
+| **1.3** Analyze | `analyze_supplements.py` | Aggregates the extracted data for each question, prints the summaries, and saves them as tables | `analysis_*` tables in the same database |
 | **1.4** Visualize | `plot_results.py` | Draws one simple chart per question | PNG files in `charts/` |
 
 ---
@@ -61,13 +61,21 @@ Shows how many trials state an absorption limit or an interaction between supple
 
 Shows how many trials gave the supplement fed (with or after a meal) versus fasted (before a meal or on an empty stomach).
 
-### 📂 Supporting CSVs
+### 🗃️ Supporting Analysis Tables
 
-| File | Contents |
-|------|----------|
-| `analysis_outputs/q1_timing_distribution.csv` | Timing windows by supplement class |
-| `analysis_outputs/q2_absorption_limits_interactions.csv` | Trials stating limits or interactions, with supporting quotes |
-| `analysis_outputs/q3_solubility_fed_fasted_percentage.csv` | Fed vs. fasted split by solubility group |
+Milestone 1.3 prints its summaries and also saves them in `pubmed_supplements.db`:
+
+| Table | Contents |
+|-------|----------|
+| `analysis_q1_timing_by_class` | Timing windows by supplement class |
+| `analysis_q2_limits_interactions` | Trials stating limits or interactions, with supporting quotes and PMIDs |
+| `analysis_q3_solubility_fed_fasted` | Fed vs. fasted counts and percentages by solubility group |
+
+Query them like any other table, for example:
+
+```sql
+SELECT * FROM analysis_q3_solubility_fed_fasted;
+```
 
 ---
 
@@ -116,7 +124,7 @@ GEMINI_MODEL=gemini-3.5-flash
 python pubmed_supplement_rcts.py          # 1.1  download (skips if fetched within 90 days)
 python extract_supplements.py --limit 25  # 1.2  test run on 25 abstracts
 python extract_supplements.py --all       # 1.2  process every pending abstract
-python analyze_supplements.py             # 1.3  CSV findings
+python analyze_supplements.py             # 1.3  analysis (prints + saves tables)
 python plot_results.py                    # 1.4  charts
 ```
 
@@ -127,6 +135,7 @@ python plot_results.py                    # 1.4  charts
 - **Resumable extraction.** Every abstract is logged in `extraction_log` (`done`, `no_abstract`, or `error`). Re-running `--all` skips finished abstracts and retries failed ones, so a stop or a rate limit never loses work.
 - **Download is idempotent.** PMID is the primary key, so re-fetching never creates duplicates. A `fetch_log` table skips the download if one finished in the last 90 days.
 - **Small batches.** PubMed records are fetched 200 at a time and committed per batch, which keeps memory flat.
+- **One source of truth.** Everything lives in `pubmed_supplements.db`. Analysis (1.3) saves its summaries as tables there, and charting (1.4) only draws charts from the database, so no results are scattered across files.
 - **Evidence over guesses.** Each extracted value comes with a short quote from the abstract, so it can be checked by hand.
 - **Cost-aware.** Extraction calls the Gemini API per abstract. Use `--limit` for test runs before processing everything.
 
@@ -147,10 +156,9 @@ python plot_results.py                    # 1.4  charts
 .
 ├── pubmed_supplement_rcts.py    # Milestone 1.1: download
 ├── extract_supplements.py       # Milestone 1.2: Gemini extraction
-├── analyze_supplements.py       # Milestone 1.3: CSV analysis
-├── plot_results.py              # Milestone 1.4: charts
-├── pubmed_supplements.db        # SQLite database (created by the scripts)
-├── analysis_outputs/            # CSV findings
+├── analyze_supplements.py       # Milestone 1.3: analysis (prints + saves tables)
+├── plot_results.py              # Milestone 1.4: charts only
+├── pubmed_supplements.db        # SQLite database: the single source of truth
 ├── charts/                      # PNG charts
 └── .env                         # API keys (do not commit)
 ```
