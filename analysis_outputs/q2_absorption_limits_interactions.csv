@@ -1,0 +1,49 @@
+pmid,supplement_name,absorption_limit_stated,interactions_noted,limit_evidence
+17182810,zinc,,"an interaction between zinc and iron, where the addition of iron may have adversely affected potential effects of zinc on immune function and morbidity",
+17237328,iron,,"zinc supplementation had a negative effect on hemoglobin concentrations (-2.5 g/L, P<0.001), independent of iron supplementation",
+17237328,zinc,,"Iron reduced the effect of zinc supplementation (interaction P<0.01), but had no separate effect on zinc status",
+17243866,vitamin K1,,interactive benefits with vitamin D,
+17243866,vitamin D3,,interactive benefits with vitamin D,
+17272491,alpha-tocopherol,,gammaT decreased (P <0.005) after alphaT supplementation,receive (500 mg/day)
+17313720,zinc,,Zn supplementation at 30 mg/d showed some age- and sex-dependent alterations in Fe status or lipid profile.,"received a daily placebo, or Zn as 15 or 30 mg for 6 months"
+17468087,zinc,,Zn-alone supplementation disadvantaged haemoglobin and iron status,"Syrup consisting of zinc-alone, Zn (10 mg/d), zinc+iron, Zn+Fe (10 mg/d of each), zinc+iron+vitamin-A, Zn+Fe+vit.A (10 mg/d of each zinc and iron plus 1,000 IU vitamin-A), or placebo were given daily for six months."
+17468087,iron,,Zn-alone supplementation disadvantaged haemoglobin and iron status,"Syrup consisting of zinc-alone, Zn (10 mg/d), zinc+iron, Zn+Fe (10 mg/d of each), zinc+iron+vitamin-A, Zn+Fe+vit.A (10 mg/d of each zinc and iron plus 1,000 IU vitamin-A), or placebo were given daily for six months."
+17490978,fish oil,,There was no FO x MTHF interaction for the time course of DHA or EPA (P=0.927 and 0.893).,
+17490978,methyltetrahydrofolic acid,,There was no FO x MTHF interaction for the time course of DHA or EPA (P=0.927 and 0.893).,
+17551129,folic acid,,"There was no significant effect modification by sex, age, smoking, alcohol use, body mass index, baseline plasma folate, or aspirin allocation.",1 mg/d of folic acid
+17662090,L-arginine,extensive presystemic elimination due to intestinal arginase activity,,L-Arginine treatment is hampered by extensive presystemic elimination due to intestinal arginase activity.
+17663804,fish oil,,The fat intervention did not markedly influence the effect of FO,4.4 (2.0-5.6) ml/d
+17691589,iron,,No differences between the two treatment groups with regard to the erythrocyte uptake were found,
+17704024,Lactobacillus rhamnosus LMG P-22799,,whether they may act independent from each other or in a synergistic way,
+17704024,inulin,,whether they may act independent from each other or in a synergistic way,
+17704024,soy polysaccharides,,whether they may act independent from each other or in a synergistic way,
+17704024,zinc,,whether they may act independent from each other or in a synergistic way,
+17704024,iron,,whether they may act independent from each other or in a synergistic way,
+17846285,vitamin E,,Supplementation with vitamin E may antagonize vitamin K in healthy adults,receive 600 IU of natural source vitamin E or placebo on alternate days
+17921382,vitamin A,,"For UI, SR, and RBP, there were no significant treatment interactions between iodine and vitamin A. The 3-factor and all three 2-factor interactions were significant for thyroid volume, TSH, and thyroglobulin","At baseline and after 3 mo, children received 1) iodine (191 mg I as oral iodized oil) + placebo (IS group), 2) VA (200000 IU VA as retinyl palmitate)"
+17921382,iodine,,"For UI, SR, and RBP, there were no significant treatment interactions between iodine and vitamin A. The 3-factor and all three 2-factor interactions were significant for thyroid volume, TSH, and thyroglobulin","At baseline and after 3 mo, children received 1) iodine (191 mg I as oral iodized oil)"
+17928808,iron,,The effect of iron was independent of vitamin A.,weekly iron (120 mg elemental iron)
+17928808,vitamin A,,The effect of iron was independent of vitamin A.,vitamin A (25 000 IU)
+17932361,folic acid,suggestion of an upper limit,Riboflavin supplement enhanced the response to low-dose folate in people carrying at least one T allele and having polyps.,"Colorectal mucosal folate concentration responds to folic acid supplementation to an extent comparable to that seen in plasma, but with a suggestion of an upper limit."
+17932361,riboflavin,,Riboflavin supplement enhanced the response to low-dose folate in people carrying at least one T allele and having polyps.,
+17947609,arachidonic acid,,DHA reduced the elongation and desaturation of AA and EPA.,
+17947609,docosahexaenoic acid,,DHA reduced the elongation and desaturation of AA and EPA.,
+17963760,iron,,Iron supplementation in pregnant women with hemoglobin greater than 13.2 g/dL reduces serum levels of copper and zinc.,one ferrous sulfate tablet containing 50 mg elemental iron daily
+18191645,gamma-tocopherol,,AT supplementation significantly decreased GT levels.,GT (800 mg/day)
+18191645,alpha-tocopherol,,AT supplementation significantly decreased GT levels.,AT (800 mg/day)
+18237394,vitamin A,,may play a synergistic role for reducing the risk of infection including malaria,
+18237394,zinc,,may play a synergistic role for reducing the risk of infection including malaria,
+18326612,zinc,,There were no observed adverse effects of 10 mg Zn/d on indicators of copper or iron status.,
+18326612,copper,,There were no observed adverse effects of 10 mg Zn/d on indicators of copper or iron status.,
+18373286,creatine,10 grams of creatine per single serving,,"The risk of diarrhoea may be increased, however, following intake of 10 grams of creatine per single serving."
+18492834,fish oil,,a fat x FO interaction was found for monocyte chemoattractant protein-1,5 mL/d fish oil capsules (FO) [mean intake 3.1 g/d (n-3) LCPUFA]
+18492838,(n-3) LCPUFA,,synergistic and complementary lipid-lowering effects,1.4 g/d (n-3) LCPUFA capsules
+18492838,phytosterols,,synergistic and complementary lipid-lowering effects,2 g phytosterols per day
+18951004,docosahexaenoic acid,does not saturate erythrocyte phospholipids with DHA,,Feeding preterm infants human milk and formula with 1% DHA raises but does not saturate erythrocyte phospholipids with DHA.
+19118992,arachidonic acid,,DHA tended to decrease milk AA and vice versa.,
+19118992,docosahexaenoic acid,,DHA tended to decrease milk AA and vice versa.,
+19555809,L-arginine,,"L-arginine enhances the effects of simvastatin on lipid metabolism, but it has no triglyceride-lowering effects when given alone.",1.5 g bid
+19692495,selenium,,No synergistic action of selenium and iodine was observed.,
+19692495,iodine,,No synergistic action of selenium and iodine was observed.,
+19705518,omega-3 fatty acids,,Postintervention blood pressure showed significant interactions between treatments.,
+19705518,coenzyme Q10,,Postintervention blood pressure showed significant interactions between treatments.,
